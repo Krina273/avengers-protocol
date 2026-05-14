@@ -3,75 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.H.I.E.L.D. | Secure Terminal</title>
+    <title>Stark Secure Intranet | Omega Edition</title>
     <style>
-        /* Base Hacker/Stark Theme */
         body {
-            background-color: #020202;
-            color: #00ffcc;
-            font-family: 'Courier New', Courier, monospace;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-            user-select: none;
+            background-color: #020202; color: #00ffcc; font-family: 'Courier New', Courier, monospace;
+            margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; user-select: none;
         }
 
         /* CRT Scanline Effect */
         body::after {
-            content: " ";
-            display: block;
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
+            content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 2;
-            background-size: 100% 2px, 3px 100%;
-            pointer-events: none;
+            z-index: 2; background-size: 100% 2px, 3px 100%; pointer-events: none;
         }
 
         .container {
-            width: 90%;
-            max-width: 600px;
-            border: 1px solid #00ffcc;
-            padding: 30px;
+            width: 90%; max-width: 600px; border: 1px solid #00ffcc; padding: 30px;
             box-shadow: 0 0 15px rgba(0, 255, 204, 0.2), inset 0 0 15px rgba(0, 255, 204, 0.1);
-            background: rgba(0, 20, 10, 0.8);
-            position: relative;
-            z-index: 3;
-            text-shadow: 0 0 5px #00ffcc;
+            background: rgba(0, 20, 10, 0.8); position: relative; z-index: 3; text-shadow: 0 0 5px #00ffcc;
+            max-height: 85vh; overflow-y: auto;
         }
 
-        h2 { color: #ff3366; text-shadow: 0 0 10px #ff3366; letter-spacing: 2px; border-bottom: 1px solid #ff3366; padding-bottom: 10px; }
+        .container::-webkit-scrollbar { width: 5px; }
+        .container::-webkit-scrollbar-thumb { background: #00ffcc; }
+
+        h2 { color: #ff3366; text-shadow: 0 0 10px #ff3366; letter-spacing: 2px; border-bottom: 1px dashed #ff3366; padding-bottom: 10px; margin-top: 0; }
         .hidden { display: none !important; }
-        .glitch { animation: glitch 1s linear infinite; }
 
-        /* Inputs & Buttons */
         input[type="text"] {
-            background: #000; color: #00ffcc; border: 1px solid #00ffcc;
-            padding: 10px; width: 80%; font-family: inherit; font-size: 16px; outline: none;
+            background: #000; color: #00ffcc; border: 1px solid #00ffcc; padding: 10px; width: 80%; font-family: inherit; font-size: 16px; outline: none; margin-top: 10px;
         }
-        input[type="range"] { width: 100%; margin: 15px 0; accent-color: #00ffcc; }
+        input[type="range"] { width: 100%; margin: 10px 0 20px 0; accent-color: #00ffcc; }
         
         button {
-            background: #000; color: #00ffcc; border: 1px solid #00ffcc;
-            padding: 10px 20px; font-family: inherit; font-size: 16px;
-            cursor: pointer; transition: 0.2s; text-transform: uppercase; margin-top: 10px;
+            background: #000; color: #00ffcc; border: 1px solid #00ffcc; padding: 10px 20px;
+            font-family: inherit; font-size: 16px; cursor: pointer; transition: 0.2s; text-transform: uppercase; margin-top: 10px;
         }
         button:hover, button:active { background: #00ffcc; color: #000; box-shadow: 0 0 15px #00ffcc; }
-        button.danger { border-color: #ff3366; color: #ff3366; }
+        button.danger { border-color: #ff3366; color: #ff3366; font-weight: bold; }
         button.danger:hover, button.danger:active { background: #ff3366; color: #000; box-shadow: 0 0 15px #ff3366; }
 
-        /* Custom Grids & UI */
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
-        .stone { padding: 20px; font-size: 24px; background: rgba(0,255,204,0.1); }
-        .progress-bar { width: 100%; height: 20px; border: 1px solid #ff3366; margin: 20px 0; position: relative; }
-        .progress-fill { height: 100%; background: #ff3366; width: 0%; transition: width 0.1s; box-shadow: 0 0 10px #ff3366; }
-
-        /* Utility */
-        .sys-msg { color: #888; font-size: 12px; }
+        .sys-msg { color: #888; font-size: 14px; margin-bottom: 5px; }
+        .log-box { border: 1px solid #555; background: #111; padding: 10px; font-size: 13px; color: #aaa; margin-bottom: 15px; line-height: 1.4; }
         .highlight { color: #ffcc00; font-weight: bold; text-shadow: 0 0 10px #ffcc00; }
+
+        /* Level 3: Helicarrier */
+        .hc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .hc-btn { padding: 15px 5px; font-size: 13px; font-weight: bold; text-align: center; }
+
+        /* Level 4: J.A.R.V.I.S Upload Bar */
+        .progress-bar { width: 100%; height: 25px; border: 1px solid #00ffcc; margin: 20px 0; position: relative; background: #000; }
+        .progress-fill { height: 100%; background: #00ffcc; width: 0%; transition: width 0.05s linear; box-shadow: 0 0 10px #00ffcc; }
+
+        /* Level 5: Numpad */
+        .numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 250px; margin: 15px auto; }
+        .num-btn { background: #111; color: #ffcc00; border: 1px solid #ffcc00; padding: 15px; font-size: 20px; }
+        .num-btn:hover { background: #ffcc00; color: #000; }
+        .pin-display { font-size: 24px; text-align: center; letter-spacing: 10px; color: #ffcc00; height: 30px; margin-bottom: 10px; }
+
+        /* Level 6: Hologram Variables */
+        .var-btn { display: flex; justify-content: space-between; width: 100%; text-align: left; background: #001122; border: 1px solid #00ffcc; padding: 15px; margin-bottom: 10px; color: #00ffcc; font-family: inherit; font-size: 14px; }
+        .var-btn span.val { color: #ff3366; font-weight: bold; }
+
+        /* Level 7: Infinity Stone Buttons */
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
+        .stone { padding: 15px 5px; font-size: 12px; font-weight: bold; text-align: center; border: 2px solid; background: #000; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        #st-power { border-color: #8a2be2; color: #8a2be2; } #st-power:hover { background: #8a2be2; color: #fff; box-shadow: 0 0 15px #8a2be2;}
+        #st-space { border-color: #1e90ff; color: #1e90ff; } #st-space:hover { background: #1e90ff; color: #fff; box-shadow: 0 0 15px #1e90ff;}
+        #st-reality { border-color: #dc143c; color: #dc143c; } #st-reality:hover { background: #dc143c; color: #fff; box-shadow: 0 0 15px #dc143c;}
+        #st-soul { border-color: #ff8c00; color: #ff8c00; } #st-soul:hover { background: #ff8c00; color: #fff; box-shadow: 0 0 15px #ff8c00;}
+        #st-time { border-color: #00ff00; color: #00ff00; } #st-time:hover { background: #00ff00; color: #fff; box-shadow: 0 0 15px #00ff00;}
+        #st-mind { border-color: #ffd700; color: #ffd700; } #st-mind:hover { background: #ffd700; color: #fff; box-shadow: 0 0 15px #ffd700;}
     </style>
 </head>
 <body>
@@ -79,126 +81,312 @@
 <div class="container">
     
     <div id="lvl1">
-        <h2>System Firewall</h2>
+        <h2>Phase 1: Firewall</h2>
         <p>UNAUTHORIZED ACCESS DETECTED.</p>
-        <p class="sys-msg">Enter override command to bypass Stark security protocols.</p>
-        <p class="sys-msg">Hint: The hero who started it all.</p>
-        <span>C:\SYS> </span><input type="text" id="cmd-input" autocomplete="off">
+        <div class="log-box">
+            F.R.I.D.A.Y: "Sir, the override password is the alpha-designation of your very first blueprint. The one you forged in a cave... with a box of scraps. What did you name that prototype?"
+        </div>
+        <span>C:\SYS> </span><input type="text" id="cmd-input" autocomplete="off" placeholder="Enter suit protocol...">
         <br><button onclick="checkLvl1()">EXECUTE</button>
         <p id="l1-err" style="color:#ff3366;"></p>
     </div>
 
     <div id="lvl2" class="hidden">
-        <h2>Core Calibration</h2>
-        <p>Power levels unstable. Balance the Alpha and Beta cores to reach exact resonance.</p>
-        <p class="sys-msg">Target Resonance: 100%</p>
+        <h2>Phase 2: Core Synthesis</h2>
+        <p>Synthesizing the 1974 Stark Expo element.</p>
+        <div class="log-box">
+            DIAGNOSTIC: To stabilize the new element, Palladium Toxicity must be completely eradicated. The Magnetic Confinement must be pushed to its absolute maximum limit to hold the beam. Finally, balance the Thermal Output perfectly in the middle to prevent a localized explosion.
+        </div>
         
-        <label>Alpha Output: <span id="a-val">0</span>%</label>
-        <input type="range" id="alpha" min="0" max="100" value="0" oninput="updateCores()">
+        <label>Palladium Toxicity: <span id="pal-val" style="color:#ff3366;">50</span>%</label>
+        <input type="range" id="pal" min="0" max="100" value="50" oninput="updateLvl2()">
         
-        <label>Beta Output: <span id="b-val">0</span>%</label>
-        <input type="range" id="beta" min="0" max="100" value="0" oninput="updateCores()">
+        <label>Magnetic Confinement: <span id="mag-val">50</span>%</label>
+        <input type="range" id="mag" min="0" max="100" value="50" oninput="updateLvl2()">
+
+        <label>Thermal Output: <span id="thm-val">50</span>%</label>
+        <input type="range" id="thm" min="0" max="100" value="50" oninput="updateLvl2()">
         
-        <p>Current Resonance: <span id="res-val" style="color:#ff3366;">0%</span></p>
-        <button onclick="checkLvl2()">LOCK CALIBRATION</button>
+        <button onclick="checkLvl2()">IGNITE CORE</button>
     </div>
 
     <div id="lvl3" class="hidden">
-        <h2>Infinity Cipher</h2>
-        <p>Identity Verification. Input the cosmic sequence.</p>
-        <p class="sys-msg">Memory prompt: Power, Space, Reality, Soul, Time, Mind.</p>
-        
-        <div class="grid">
-            <button class="stone" onclick="clickStone('👁️')">👁️</button>
-            <button class="stone" onclick="clickStone('✊')">✊</button>
-            <button class="stone" onclick="clickStone('🧠')">🧠</button>
-            <button class="stone" onclick="clickStone('🟦')">🟦</button>
-            <button class="stone" onclick="clickStone('🖐️')">🖐️</button>
-            <button class="stone" onclick="clickStone('💧')">💧</button>
+        <h2 style="color: #1e90ff; border-color: #1e90ff;">Phase 3: The Helicarrier</h2>
+        <p>Turbine 3 Offline. Altitude dropping.</p>
+        <div class="log-box" style="border-color: #1e90ff; color: #add8e6;">
+            COMMS: "Cap is in the control panel! We need to clear the system of fluids first so it doesn't freeze. Then, take the safety off so the gears can move. Once it's free, get the rotors moving, and ONLY THEN do you engage the primary ignition switch!"
         </div>
-        <p id="cipher-output" style="letter-spacing: 5px;">_ _ _ _ _ _</p>
+        
+        <div class="hc-grid">
+            <button class="hc-btn" onclick="clickHc('SPIN')">SPIN REPULSORS</button>
+            <button class="hc-btn" onclick="clickHc('PURGE')">PURGE COOLANT</button>
+            <button class="hc-btn" onclick="clickHc('BRAKE')">DISENGAGE BRAKE</button>
+            <button class="hc-btn danger" onclick="clickHc('LEVER')">PULL RED LEVER</button>
+        </div>
+        <p id="hc-output" style="color: #1e90ff; font-weight: bold; font-size: 14px;">AWAITING COMMAND SEQUENCE...</p>
     </div>
 
     <div id="lvl4" class="hidden">
-        <h2 style="color: #ffcc00; border-color: #ffcc00;">Final Execution</h2>
-        <p>Encrypted payload locked. Manual detonation required.</p>
-        <p class="sys-msg">HOLD the button to charge. RELEASE exactly at 100%. Do not overload.</p>
+        <h2>Phase 4: J.A.R.V.I.S Matrix</h2>
+        <p>Ultron is attacking the mainframe.</p>
+        <div class="log-box">
+            WARNING: Ultron is draining the bandwidth. The upload requires a constant, rapid influx of manual data packets. Do not let the transfer rate drop. Keep hammering the override until the matrix is fully secured in the Cradle!
+        </div>
         
-        <div class="progress-bar"><div class="progress-fill" id="charge-fill"></div></div>
-        <p>Charge: <span id="charge-text">0</span>%</p>
+        <div class="progress-bar"><div class="progress-fill" id="upload-fill"></div></div>
+        <h3 id="upload-text" style="text-align: center; color: #00ffcc;">0%</h3>
         
-        <button class="danger" id="snap-btn" style="width: 100%; padding: 20px; font-size: 20px;">HOLD TO CHARGE</button>
+        <button id="upload-btn" onclick="clickUpload()" style="width: 100%; padding: 30px; font-size: 24px; font-weight: bold; background: #003311;">FORCE OVERRIDE</button>
+    </div>
+
+    <div id="lvl5" class="hidden">
+        <h2 style="color: #ffcc00; border-color: #ffcc00;">Phase 5: The Bunker</h2>
+        <p>S.H.I.E.L.D. Encrypted Archive Locked.</p>
+        <div class="log-box" style="color: #ffcc00; border-color: #ffcc00;">
+            ZEMO PROTOCOL: To access the deep archives, input the exact year the Winter Soldier intercepted the Stark vehicle on a dark road. The year that tore the Avengers apart.<br><br>
+            "Mission Report: December 16, _ _ _ _"
+        </div>
+        
+        <div class="pin-display" id="pin-screen">_ _ _ _</div>
+        
+        <div class="numpad">
+            <button class="num-btn" onclick="addPin(1)">1</button>
+            <button class="num-btn" onclick="addPin(2)">2</button>
+            <button class="num-btn" onclick="addPin(3)">3</button>
+            <button class="num-btn" onclick="addPin(4)">4</button>
+            <button class="num-btn" onclick="addPin(5)">5</button>
+            <button class="num-btn" onclick="addPin(6)">6</button>
+            <button class="num-btn" onclick="addPin(7)">7</button>
+            <button class="num-btn" onclick="addPin(8)">8</button>
+            <button class="num-btn" onclick="addPin(9)">9</button>
+            <button class="num-btn" style="background: #330000; border-color: #ff3366; color: #ff3366;" onclick="clearPin()">DEL</button>
+            <button class="num-btn" onclick="addPin(0)">0</button>
+            <button class="num-btn" style="background: #003311; border-color: #00ffcc; color: #00ffcc;" onclick="checkLvl5()">ENT</button>
+        </div>
+    </div>
+
+    <div id="lvl6" class="hidden">
+        <h2>Phase 6: The Time GPS</h2>
+        <p>Chronological modeling failing.</p>
+        <div class="log-box">
+            F.R.I.D.A.Y: "Sir, standard chronological modeling is failing. To stabilize the quantum tunnel, try projecting the topology as a continuous, one-sided mathematical loop. Then, flip the orientation completely upside down, and run the measurement based on its quantum spectral scale (the 'E' value)."
+        </div>
+        
+        <p class="sys-msg">Click variables to cycle configurations:</p>
+        
+        <button class="var-btn" onclick="cycleVar('topo')">Topology Mode: <span class="val" id="var-topo">Sphere</span></button>
+        <button class="var-btn" onclick="cycleVar('orient')">Orientation: <span class="val" id="var-orient">Standard</span></button>
+        <button class="var-btn" onclick="cycleVar('measure')">Measurement: <span class="val" id="var-measure">Chronological</span></button>
+        
+        <button onclick="checkLvl6()" style="margin-top: 20px;">RUN DIAGNOSTIC</button>
+    </div>
+
+    <div id="lvl7" class="hidden">
+        <h2>Phase 7: Cosmic Cipher</h2>
+        <p>The universe requires correction.</p>
+        <div class="log-box">
+            MISSION LOG: The Mad Titan claimed them one by one. Follow his path of destruction to bypass this lock. <br><br>
+            Start where Xandar fell. Then, the Asgardian refugee ship. Next, the Collector's vault. A sacrifice on Vormir. A battle on Titan. Finally, a mind torn apart in Wakanda.
+        </div>
+        
+        <div class="grid">
+            <button class="stone" id="st-time" onclick="clickStone('👁️ TIME')"><span style="font-size: 20px;">👁️</span>TIME</button>
+            <button class="stone" id="st-power" onclick="clickStone('✊ POWER')"><span style="font-size: 20px;">✊</span>POWER</button>
+            <button class="stone" id="st-mind" onclick="clickStone('🧠 MIND')"><span style="font-size: 20px;">🧠</span>MIND</button>
+            <button class="stone" id="st-space" onclick="clickStone('🟦 SPACE')"><span style="font-size: 20px;">🟦</span>SPACE</button>
+            <button class="stone" id="st-soul" onclick="clickStone('🖐️ SOUL')"><span style="font-size: 20px;">🖐️</span>SOUL</button>
+            <button class="stone" id="st-reality" onclick="clickStone('💧 REALITY')"><span style="font-size: 20px;">💧</span>REALITY</button>
+        </div>
+        <p id="cipher-output" style="letter-spacing: 2px; font-size: 13px;"></p>
+    </div>
+
+    <div id="lvl8" class="hidden">
+        <h2 style="color: #ffcc00; border-color: #ffcc00;">Phase 8: Final Execution</h2>
+        <p>Nano-Gauntlet armed. Encrypted payload locked.</p>
+        <div class="log-box">
+            WARNING: Gamma radiation levels lethal. Hold the button to charge the gauntlet. To safely execute the snap, you must release the charge at the exact Megajoule output that answers the ultimate question: How much does Morgan love Tony? Do not overload.
+        </div>
+        
+        <h1 id="charge-text" style="text-align: center; font-size: 40px; color: #ff3366; margin: 10px 0;">0 <span style="font-size: 20px;">MJ</span></h1>
+        
+        <button class="danger" id="snap-btn" style="width: 100%; padding: 25px; font-size: 20px;">HOLD TO CHARGE</button>
     </div>
 
     <div id="success" class="hidden">
         <h2 style="color: #00ffcc;">Payload Decrypted</h2>
-        <p class="sys-msg">Access granted to your girlfriend's secure server.</p>
+        <p class="sys-msg">Access granted to Admin Krinuu's secure server.</p>
         <br>
-        <p>Happyyy Birthdayyy bacchaaa!❤️❤️</p>
+         <p>Happyyy Birthdayyy bacchaaa!❤️❤️</p>
+        <p>Thankk youu for beinggg there this patientlyy alwaysss!! Loveeee youuu <span class="highlight">3000!</span>.</p
+        <p>You cracked the firewall, synthesized the core, restarted the Helicarrier, uploaded J.A.R.V.I.S., unlocked the bunker, solved 	time travel, outsmarted Thanos, and executed the snap perfectly uk. </p>
         <br>
-        <p>You survived the puzzles, which proves you're smart enough for me. Goooodjobbbbbbb, Nai nai am not taking credits ama bi.</p>
-        <p>Thankk youu for beinggg there this patientlyy alwaysss!! Loveeee youuu <span class="highlight">3000!</span>.</p>
-        <br>
-        <p><i>- Krinuu</i></p>
+        <p style="text-align: right; margin-top: 30px;"><i>- Krinuu</i></p>
 
-        <p style="text-align: right;"><i>- Krinuu</i></p>
     </div>
 
 </div>
 
 <script>
-    // LEVEL 1: Terminal Command
+    // --- PHASE 1: Firewall ---
     function checkLvl1() {
-        let cmd = document.getElementById('cmd-input').value.toLowerCase().trim();
-        if(cmd === 'ironman' || cmd === 'iron man') {
+        let cmd = document.getElementById('cmd-input').value.toLowerCase().replace(/\s/g, '');
+        if(cmd === 'mark1') {
             document.getElementById('lvl1').classList.add('hidden');
             document.getElementById('lvl2').classList.remove('hidden');
         } else {
-            document.getElementById('l1-err').innerText = "FATAL ERROR: Command not recognized.";
+            document.getElementById('l1-err').innerText = "FATAL ERROR: Protocol not recognized.";
         }
     }
 
-    // LEVEL 2: Math/Core Calibration
-    function updateCores() {
-        let a = parseInt(document.getElementById('alpha').value);
-        let b = parseInt(document.getElementById('beta').value);
-        document.getElementById('a-val').innerText = a;
-        document.getElementById('b-val').innerText = b;
-        
-        let res = a + b;
-        let resDisplay = document.getElementById('res-val');
-        resDisplay.innerText = res + "%";
-        
-        if(res === 100) { resDisplay.style.color = "#00ffcc"; } 
-        else { resDisplay.style.color = "#ff3366"; }
+    // --- PHASE 2: Core Synthesis ---
+    function updateLvl2() {
+        document.getElementById('pal-val').innerText = document.getElementById('pal').value;
+        document.getElementById('mag-val').innerText = document.getElementById('mag').value;
+        document.getElementById('thm-val').innerText = document.getElementById('thm').value;
     }
 
     function checkLvl2() {
-        let a = parseInt(document.getElementById('alpha').value);
-        let b = parseInt(document.getElementById('beta').value);
-        if(a + b === 100 && a > 0 && b > 0) {
+        let p = parseInt(document.getElementById('pal').value);
+        let m = parseInt(document.getElementById('mag').value);
+        let t = parseInt(document.getElementById('thm').value);
+        
+        if(p === 0 && m === 100 && t === 50) {
             document.getElementById('lvl2').classList.add('hidden');
             document.getElementById('lvl3').classList.remove('hidden');
         } else {
-            alert("CORE DESTABILIZED. Resonance must be exactly 100%.");
+            alert("MELTDOWN IMMINENT! Read the diagnostic log again.");
         }
     }
 
-    // LEVEL 3: Stone Cipher
-    const correctSeq = ['✊', '🟦', '💧', '🖐️', '👁️', '🧠'];
+    // --- PHASE 3: Helicarrier Reboot ---
+    const hcCorrect = ['PURGE', 'BRAKE', 'SPIN', 'LEVER'];
+    let hcSeq = [];
+    
+    function clickHc(action) {
+        hcSeq.push(action);
+        let out = document.getElementById('hc-output');
+        out.innerText = `> COMMAND EXECUTED: ${action}...`;
+        
+        if(hcSeq[hcSeq.length - 1] !== hcCorrect[hcSeq.length - 1]) {
+            out.innerText = "CRITICAL ERROR: SEQUENCE MISMATCH. REBOOTING ENGINE.";
+            out.style.color = "#ff3366";
+            hcSeq = [];
+            setTimeout(() => { out.innerText = "AWAITING COMMAND SEQUENCE..."; out.style.color = "#1e90ff"; }, 1500);
+            return;
+        }
+
+        if(hcSeq.length === 4) {
+            out.innerText = "ROTOR 3 ONLINE. ALTITUDE STABILIZED.";
+            out.style.color = "#00ff00";
+            setTimeout(() => {
+                document.getElementById('lvl3').classList.add('hidden');
+                document.getElementById('lvl4').classList.remove('hidden');
+            }, 1500);
+        }
+    }
+
+    // --- PHASE 4: J.A.R.V.I.S Upload ---
+    let upload = 0;
+    let uploadInterval = null;
+    
+    function clickUpload() {
+        if(!uploadInterval) {
+            uploadInterval = setInterval(() => {
+                if(upload > 0) upload -= 1.5; 
+                document.getElementById('upload-fill').style.width = upload + '%';
+                document.getElementById('upload-text').innerText = Math.floor(upload) + '%';
+            }, 50);
+        }
+        
+        upload += 12; 
+        
+        if(upload >= 100) {
+            upload = 100;
+            clearInterval(uploadInterval);
+            document.getElementById('upload-fill').style.width = '100%';
+            document.getElementById('upload-text').innerText = "UPLOAD COMPLETE";
+            document.getElementById('upload-btn').innerText = "SYSTEM SECURED";
+            document.getElementById('upload-btn').disabled = true;
+            
+            setTimeout(() => {
+                document.getElementById('lvl4').classList.add('hidden');
+                document.getElementById('lvl5').classList.remove('hidden');
+            }, 1500);
+        }
+    }
+
+    // --- PHASE 5: Siberian Bunker PIN ---
+    let currentPin = "";
+    function addPin(num) {
+        if(currentPin.length < 4) {
+            currentPin += num;
+            updatePinDisplay();
+        }
+    }
+    function clearPin() {
+        currentPin = "";
+        updatePinDisplay();
+    }
+    function updatePinDisplay() {
+        let display = currentPin.padEnd(4, "_").split("").join(" ");
+        document.getElementById('pin-screen').innerText = display;
+    }
+    function checkLvl5() {
+        if(currentPin === "1991") {
+            document.getElementById('lvl5').classList.add('hidden');
+            document.getElementById('lvl6').classList.remove('hidden');
+        } else {
+            document.getElementById('pin-screen').innerText = "E R R O R";
+            document.getElementById('pin-screen').style.color = "#ff3366";
+            setTimeout(() => {
+                currentPin = "";
+                document.getElementById('pin-screen').style.color = "#ffcc00";
+                updatePinDisplay();
+            }, 800);
+        }
+    }
+
+    // --- PHASE 6: Time Space GPS ---
+    const options = {
+        topo: ["Sphere", "Torus", "Cylinder", "Mobius Strip"],
+        orient: ["Standard", "Orthogonal", "Inverted"],
+        measure: ["Chronological", "Quantum", "Eigenvalue"]
+    };
+    const indices = { topo: 0, orient: 0, measure: 0 };
+
+    function cycleVar(type) {
+        indices[type] = (indices[type] + 1) % options[type].length;
+        document.getElementById(`var-${type}`).innerText = options[type][indices[type]];
+    }
+
+    function checkLvl6() {
+        let t = document.getElementById('var-topo').innerText.toUpperCase();
+        let o = document.getElementById('var-orient').innerText.toUpperCase();
+        let m = document.getElementById('var-measure').innerText.toUpperCase();
+
+        if(t === "MOBIUS STRIP" && o === "INVERTED" && m === "EIGENVALUE") {
+            document.getElementById('lvl6').classList.add('hidden');
+            document.getElementById('lvl7').classList.remove('hidden');
+        } else {
+            alert("SIMULATION FAILED. Quantum tunnel collapsed. Reconfigure the variables.");
+        }
+    }
+
+    // --- PHASE 7: Infinity War Order ---
+    const correctSeq = ['✊ POWER', '🟦 SPACE', '💧 REALITY', '🖐️ SOUL', '👁️ TIME', '🧠 MIND'];
     let userSeq = [];
     
     function clickStone(stone) {
         userSeq.push(stone);
-        document.getElementById('cipher-output').innerText = userSeq.join(' ');
+        document.getElementById('cipher-output').innerText = userSeq.join(' - ');
         
         for(let i=0; i<userSeq.length; i++) {
             if(userSeq[i] !== correctSeq[i]) {
-                document.getElementById('cipher-output').innerText = "SEQUENCE FAILED. MEMORY WIPED.";
+                document.getElementById('cipher-output').innerText = "SEQUENCE FAILED. SNAP AVERTED.";
                 document.getElementById('cipher-output').style.color = "#ff3366";
                 setTimeout(() => { 
                     userSeq = []; 
-                    document.getElementById('cipher-output').innerText = "_ _ _ _ _ _"; 
+                    document.getElementById('cipher-output').innerText = ""; 
                     document.getElementById('cipher-output').style.color = "#00ffcc";
                 }, 1000);
                 return;
@@ -208,60 +396,60 @@
         if(userSeq.length === 6) {
             document.getElementById('cipher-output').innerText = "CIPHER ACCEPTED.";
             setTimeout(() => {
-                document.getElementById('lvl3').classList.add('hidden');
-                document.getElementById('lvl4').classList.remove('hidden');
+                document.getElementById('lvl7').classList.add('hidden');
+                document.getElementById('lvl8').classList.remove('hidden');
             }, 1000);
         }
     }
 
-    // LEVEL 4: The Snap (Timing Minigame)
+    // --- PHASE 8: The 3000 Snap ---
     let charge = 0;
-    let chargeInterval;
+    let chargeInterval2;
     const btn = document.getElementById('snap-btn');
-    const fill = document.getElementById('charge-fill');
     const text = document.getElementById('charge-text');
 
     function startCharge(e) {
-        e.preventDefault(); // Prevents mobile text selection
+        e.preventDefault(); 
         charge = 0;
-        chargeInterval = setInterval(() => {
-            charge += 2; // Speed of charge
-            fill.style.width = charge + "%";
-            text.innerText = charge;
+        text.style.color = "#ffcc00";
+        chargeInterval2 = setInterval(() => {
+            charge += 35; 
+            text.innerHTML = charge + ' <span style="font-size: 20px;">MJ</span>';
             
-            if(charge > 100) {
-                // OVERLOAD
+            if(charge > 3100) {
                 stopCharge();
-                fill.style.background = "#fff";
                 text.innerText = "OVERLOAD!";
-                setTimeout(() => { fill.style.width = "0%"; charge = 0; text.innerText = "0"; fill.style.background = "#ff3366"; }, 800);
+                text.style.color = "#ff3366";
+                document.body.style.background = "#ff000022";
+                setTimeout(() => { charge = 0; text.innerHTML = '0 <span style="font-size: 20px;">MJ</span>'; document.body.style.background = "#020202"; }, 800);
             }
-        }, 50);
+        }, 30);
     }
 
     function stopCharge(e) {
         if(e) e.preventDefault();
-        clearInterval(chargeInterval);
-        if(charge === 100) {
-            // SUCCESS
-            document.body.style.background = "#fff"; // Flashbang
+        clearInterval(chargeInterval2);
+        
+        if(charge >= 2950 && charge <= 3050) {
+            text.innerText = "3000 - LOCKED.";
+            text.style.color = "#00ffcc";
+            document.body.style.background = "#fff"; 
             setTimeout(() => {
                 document.body.style.background = "#020202";
-                document.getElementById('lvl4').classList.add('hidden');
+                document.getElementById('lvl8').classList.add('hidden');
                 document.getElementById('success').classList.remove('hidden');
-            }, 300);
-        } else if (charge < 100 && charge > 0) {
-            text.innerText = "FAILED: INSUFFICIENT POWER";
-            setTimeout(() => { fill.style.width = "0%"; charge = 0; text.innerText = "0"; }, 800);
+            }, 500);
+        } else if (charge < 2950 && charge > 0) {
+            text.innerText = "FAILED: NOT ENOUGH POWER";
+            text.style.color = "#ff3366";
+            setTimeout(() => { charge = 0; text.innerHTML = '0 <span style="font-size: 20px;">MJ</span>'; }, 800);
         }
     }
 
-    // Mouse events for PC
     btn.addEventListener('mousedown', startCharge);
     btn.addEventListener('mouseup', stopCharge);
-    btn.addEventListener('mouseleave', () => { if(charge > 0 && charge < 100) stopCharge(); });
+    btn.addEventListener('mouseleave', () => { if(charge > 0 && charge < 3100) stopCharge(); });
     
-    // Touch events for Mobile Phones
     btn.addEventListener('touchstart', startCharge);
     btn.addEventListener('touchend', stopCharge);
 
