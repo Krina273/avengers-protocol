@@ -3,237 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avengers Protocol | Secure Decryption</title>
+    <title>S.H.I.E.L.D. | Secure Terminal</title>
     <style>
+        /* Base Hacker/Stark Theme */
         body {
-            background-color: #050505;
+            background-color: #020202;
             color: #00ffcc;
             font-family: 'Courier New', Courier, monospace;
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
+            min-height: 100vh;
             overflow: hidden;
+            user-select: none;
         }
-        .game-container {
-            border: 2px solid #00ffcc;
-            padding: 30px;
-            box-shadow: 0 0 30px rgba(0, 255, 204, 0.2);
-            width: 550px;
-            background: #0a0a0a;
-            position: relative;
-        }
-        h2 { color: #ff3366; text-transform: uppercase; letter-spacing: 2px; margin-top: 0; }
-        .hidden { display: none !important; }
-        
-        /* --- LEVEL 1: ARC REACTOR --- */
-        .reactor-core {
-            width: 100px; height: 100px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #ffffff 10%, #00d4ff 40%, #000 90%);
-            margin: 20px auto;
-            border: 4px solid #333;
-            box-shadow: 0 0 0px #00d4ff; /* Glow changes with JS */
-            transition: box-shadow 0.1s;
-        }
-        input[type="range"] { width: 80%; margin: 20px 0; }
-        
-        /* --- LEVEL 2: INFINITY SEQUENCE --- */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin: 20px auto;
-            width: 80%;
-        }
-        .stone-btn {
-            background: transparent;
-            border: 1px solid #00ffcc;
-            font-size: 24px;
-            padding: 15px;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-        .stone-btn:hover { background: rgba(0, 255, 204, 0.2); }
-        .stone-btn.active { background: #00ffcc; box-shadow: 0 0 15px #00ffcc; }
-        .stone-btn.error { background: #ff3366; border-color: #ff3366; box-shadow: 0 0 15px #ff3366; }
 
-        /* --- LEVEL 3: THE SNAP NODES --- */
-        .node-container {
-            position: relative;
-            width: 250px;
-            height: 250px;
-            margin: 20px auto;
-        }
-        .node {
+        /* CRT Scanline Effect */
+        body::after {
+            content: " ";
+            display: block;
             position: absolute;
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            background: #111;
-            border: 2px solid #00ffcc;
-            cursor: pointer;
-            display: flex; justify-content: center; align-items: center;
-            font-weight: bold;
-            transition: 0.3s;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
         }
-        .node:hover { background: rgba(0,255,204,0.3); }
-        .node.activated { background: #00ffcc; color: #000; box-shadow: 0 0 20px #00ffcc; }
-        
-        #node-center { top: 105px; left: 105px; width: 50px; height: 50px; border-color: #ffcc00; }
-        #node-tl { top: 0; left: 0; }
-        #node-tr { top: 0; right: 0; }
-        #node-bl { bottom: 0; left: 0; }
-        #node-br { bottom: 0; right: 0; }
 
-        button.action-btn {
-            background: transparent; border: 2px solid #00ffcc; color: #00ffcc;
-            padding: 10px 20px; font-size: 16px; font-family: inherit;
-            cursor: pointer; margin-top: 15px; transition: 0.3s;
+        .container {
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid #00ffcc;
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2), inset 0 0 15px rgba(0, 255, 204, 0.1);
+            background: rgba(0, 20, 10, 0.8);
+            position: relative;
+            z-index: 3;
+            text-shadow: 0 0 5px #00ffcc;
         }
-        button.action-btn:hover { background: #00ffcc; color: #050505; }
+
+        h2 { color: #ff3366; text-shadow: 0 0 10px #ff3366; letter-spacing: 2px; border-bottom: 1px solid #ff3366; padding-bottom: 10px; }
+        .hidden { display: none !important; }
+        .glitch { animation: glitch 1s linear infinite; }
+
+        /* Inputs & Buttons */
+        input[type="text"] {
+            background: #000; color: #00ffcc; border: 1px solid #00ffcc;
+            padding: 10px; width: 80%; font-family: inherit; font-size: 16px; outline: none;
+        }
+        input[type="range"] { width: 100%; margin: 15px 0; accent-color: #00ffcc; }
         
-        .highlight { color: #ffcc00; font-weight: bold; }
+        button {
+            background: #000; color: #00ffcc; border: 1px solid #00ffcc;
+            padding: 10px 20px; font-family: inherit; font-size: 16px;
+            cursor: pointer; transition: 0.2s; text-transform: uppercase; margin-top: 10px;
+        }
+        button:hover, button:active { background: #00ffcc; color: #000; box-shadow: 0 0 15px #00ffcc; }
+        button.danger { border-color: #ff3366; color: #ff3366; }
+        button.danger:hover, button.danger:active { background: #ff3366; color: #000; box-shadow: 0 0 15px #ff3366; }
+
+        /* Custom Grids & UI */
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
+        .stone { padding: 20px; font-size: 24px; background: rgba(0,255,204,0.1); }
+        .progress-bar { width: 100%; height: 20px; border: 1px solid #ff3366; margin: 20px 0; position: relative; }
+        .progress-fill { height: 100%; background: #ff3366; width: 0%; transition: width 0.1s; box-shadow: 0 0 10px #ff3366; }
+
+        /* Utility */
+        .sys-msg { color: #888; font-size: 12px; }
+        .highlight { color: #ffcc00; font-weight: bold; text-shadow: 0 0 10px #ffcc00; }
     </style>
 </head>
 <body>
 
-<div class="game-container">
+<div class="container">
     
-    <div id="level-1">
-        <h2>Level 1: Calibration</h2>
-        <p>Reactor core destabilized. <br>Calibrate power output to exactly <b>3000</b>.</p>
-        
-        <div class="reactor-core" id="reactor-visual"></div>
-        <input type="range" id="reactor-slider" min="0" max="5000" value="0" oninput="updateReactor()">
-        <p>Output: <span id="slider-value">0</span> MW</p>
-        
-        <button class="action-btn" onclick="checkLevel1()">LOCK CALIBRATION</button>
+    <div id="lvl1">
+        <h2>System Firewall</h2>
+        <p>UNAUTHORIZED ACCESS DETECTED.</p>
+        <p class="sys-msg">Enter override command to bypass Stark security protocols.</p>
+        <p class="sys-msg">Hint: The hero who started it all.</p>
+        <span>C:\SYS> </span><input type="text" id="cmd-input" autocomplete="off">
+        <br><button onclick="checkLvl1()">EXECUTE</button>
+        <p id="l1-err" style="color:#ff3366;"></p>
     </div>
 
-    <div id="level-2" class="hidden">
-        <h2>Level 2: Authorization</h2>
-        <p>Enter the correct sequence to prove your identity.</p>
-        <p style="font-size: 12px; color: #888;">(Hint: Power, Space, Reality, Soul, Time, Mind)</p>
+    <div id="lvl2" class="hidden">
+        <h2>Core Calibration</h2>
+        <p>Power levels unstable. Balance the Alpha and Beta cores to reach exact resonance.</p>
+        <p class="sys-msg">Target Resonance: 100%</p>
         
-        <div class="grid-container" id="stone-grid">
-            <button class="stone-btn" onclick="handleStone('✊')">✊</button>
-            <button class="stone-btn" onclick="handleStone('🟦')">🟦</button>
-            <button class="stone-btn" onclick="handleStone('💧')">💧</button>
-            <button class="stone-btn" onclick="handleStone('🖐️')">🖐️</button>
-            <button class="stone-btn" onclick="handleStone('👁️')">👁️</button>
-            <button class="stone-btn" onclick="handleStone('🧠')">🧠</button>
+        <label>Alpha Output: <span id="a-val">0</span>%</label>
+        <input type="range" id="alpha" min="0" max="100" value="0" oninput="updateCores()">
+        
+        <label>Beta Output: <span id="b-val">0</span>%</label>
+        <input type="range" id="beta" min="0" max="100" value="0" oninput="updateCores()">
+        
+        <p>Current Resonance: <span id="res-val" style="color:#ff3366;">0%</span></p>
+        <button onclick="checkLvl2()">LOCK CALIBRATION</button>
+    </div>
+
+    <div id="lvl3" class="hidden">
+        <h2>Infinity Cipher</h2>
+        <p>Identity Verification. Input the cosmic sequence.</p>
+        <p class="sys-msg">Memory prompt: Power, Space, Reality, Soul, Time, Mind.</p>
+        
+        <div class="grid">
+            <button class="stone" onclick="clickStone('👁️')">👁️</button>
+            <button class="stone" onclick="clickStone('✊')">✊</button>
+            <button class="stone" onclick="clickStone('🧠')">🧠</button>
+            <button class="stone" onclick="clickStone('🟦')">🟦</button>
+            <button class="stone" onclick="clickStone('🖐️')">🖐️</button>
+            <button class="stone" onclick="clickStone('💧')">💧</button>
         </div>
-        <p id="sequence-display" style="letter-spacing: 5px; height: 20px;"></p>
+        <p id="cipher-output" style="letter-spacing: 5px;">_ _ _ _ _ _</p>
     </div>
 
-    <div id="level-3" class="hidden">
-        <h2>Level 3: Initialization</h2>
-        <p>Route the power. <br>Sequence: Center, Top-Left, Top-Right, Bottom-Right, Bottom-Left.</p>
+    <div id="lvl4" class="hidden">
+        <h2 style="color: #ffcc00; border-color: #ffcc00;">Final Execution</h2>
+        <p>Encrypted payload locked. Manual detonation required.</p>
+        <p class="sys-msg">HOLD the button to charge. RELEASE exactly at 100%. Do not overload.</p>
         
-        <div class="node-container">
-            <div class="node" id="node-tl" onclick="handleNode('TL', this)">1</div>
-            <div class="node" id="node-tr" onclick="handleNode('TR', this)">2</div>
-            <div class="node" id="node-center" onclick="handleNode('C', this)">C</div>
-            <div class="node" id="node-bl" onclick="handleNode('BL', this)">4</div>
-            <div class="node" id="node-br" onclick="handleNode('BR', this)">3</div>
-        </div>
+        <div class="progress-bar"><div class="progress-fill" id="charge-fill"></div></div>
+        <p>Charge: <span id="charge-text">0</span>%</p>
+        
+        <button class="danger" id="snap-btn" style="width: 100%; padding: 20px; font-size: 20px;">HOLD TO CHARGE</button>
     </div>
 
-    <div id="success-screen" class="hidden">
-        <h2 style="color: #00ffcc;">Decryption Successful</h2>
+    <div id="success" class="hidden">
+        <h2 style="color: #00ffcc;">Payload Decrypted</h2>
+        <p class="sys-msg">Access granted to your girlfriend's secure server.</p>
+        <br>
         <p>Happyyy Birthdayyy bacchaaa!❤️❤️</p>
         <br>
         <p>You survived the puzzles, which proves you're smart enough for me. Goooodjobbbbbbb, Nai nai am not taking credits ama bi.</p>
-        <p>Loveeee youuu!Thankk youu for beinggg there this patientlyy alwaysss!<span class="highlight">3000</span>.</p>
+        <p>Thankk youu for beinggg there this patientlyy alwaysss!! Loveeee youuu <span class="highlight">3000!</span>.</p>
         <br>
         <p><i>- Krinuu</i></p>
+
+        <p style="text-align: right;"><i>- Krinuu</i></p>
     </div>
 
 </div>
 
 <script>
-    // --- LEVEL 1: REACTOR LOGIC ---
-    function updateReactor() {
-        let val = document.getElementById('reactor-slider').value;
-        document.getElementById('slider-value').innerText = val;
-        // Make the reactor glow brighter as it gets closer to 5000
-        let glow = (val / 5000) * 100;
-        document.getElementById('reactor-visual').style.boxShadow = `0 0 ${glow}px #00d4ff`;
-    }
-
-    function checkLevel1() {
-        let val = document.getElementById('reactor-slider').value;
-        if (val >= 2990 && val <= 3010) { // Gives a tiny bit of leeway!
-            document.getElementById('level-1').classList.add('hidden');
-            document.getElementById('level-2').classList.remove('hidden');
+    // LEVEL 1: Terminal Command
+    function checkLvl1() {
+        let cmd = document.getElementById('cmd-input').value.toLowerCase().trim();
+        if(cmd === 'ironman' || cmd === 'iron man') {
+            document.getElementById('lvl1').classList.add('hidden');
+            document.getElementById('lvl2').classList.remove('hidden');
         } else {
-            alert("CALIBRATION FAILED. Output unstable. Try again.");
+            document.getElementById('l1-err').innerText = "FATAL ERROR: Command not recognized.";
         }
     }
 
-    // --- LEVEL 2: STONE SEQUENCE LOGIC ---
-    const correctSequence = ['✊', '🟦', '💧', '🖐️', '👁️', '🧠'];
-    let currentSequence = [];
-
-    function handleStone(stone) {
-        currentSequence.push(stone);
-        document.getElementById('sequence-display').innerText = currentSequence.join(' ');
+    // LEVEL 2: Math/Core Calibration
+    function updateCores() {
+        let a = parseInt(document.getElementById('alpha').value);
+        let b = parseInt(document.getElementById('beta').value);
+        document.getElementById('a-val').innerText = a;
+        document.getElementById('b-val').innerText = b;
         
-        // Check if the current sequence matches so far
-        for (let i = 0; i < currentSequence.length; i++) {
-            if (currentSequence[i] !== correctSequence[i]) {
-                // Wrong sequence entered!
-                document.getElementById('sequence-display').innerText = "ERROR: SEQUENCE RESET";
-                document.getElementById('sequence-display').style.color = "#ff3366";
-                setTimeout(() => {
-                    currentSequence = [];
-                    document.getElementById('sequence-display').innerText = "";
-                    document.getElementById('sequence-display').style.color = "#00ffcc";
+        let res = a + b;
+        let resDisplay = document.getElementById('res-val');
+        resDisplay.innerText = res + "%";
+        
+        if(res === 100) { resDisplay.style.color = "#00ffcc"; } 
+        else { resDisplay.style.color = "#ff3366"; }
+    }
+
+    function checkLvl2() {
+        let a = parseInt(document.getElementById('alpha').value);
+        let b = parseInt(document.getElementById('beta').value);
+        if(a + b === 100 && a > 0 && b > 0) {
+            document.getElementById('lvl2').classList.add('hidden');
+            document.getElementById('lvl3').classList.remove('hidden');
+        } else {
+            alert("CORE DESTABILIZED. Resonance must be exactly 100%.");
+        }
+    }
+
+    // LEVEL 3: Stone Cipher
+    const correctSeq = ['✊', '🟦', '💧', '🖐️', '👁️', '🧠'];
+    let userSeq = [];
+    
+    function clickStone(stone) {
+        userSeq.push(stone);
+        document.getElementById('cipher-output').innerText = userSeq.join(' ');
+        
+        for(let i=0; i<userSeq.length; i++) {
+            if(userSeq[i] !== correctSeq[i]) {
+                document.getElementById('cipher-output').innerText = "SEQUENCE FAILED. MEMORY WIPED.";
+                document.getElementById('cipher-output').style.color = "#ff3366";
+                setTimeout(() => { 
+                    userSeq = []; 
+                    document.getElementById('cipher-output').innerText = "_ _ _ _ _ _"; 
+                    document.getElementById('cipher-output').style.color = "#00ffcc";
                 }, 1000);
                 return;
             }
         }
-
-        // If they got all 6 right
-        if (currentSequence.length === correctSequence.length) {
-            document.getElementById('sequence-display').innerText = "AUTHORIZATION ACCEPTED";
+        
+        if(userSeq.length === 6) {
+            document.getElementById('cipher-output').innerText = "CIPHER ACCEPTED.";
             setTimeout(() => {
-                document.getElementById('level-2').classList.add('hidden');
-                document.getElementById('level-3').classList.remove('hidden');
+                document.getElementById('lvl3').classList.add('hidden');
+                document.getElementById('lvl4').classList.remove('hidden');
             }, 1000);
         }
     }
 
-    // --- LEVEL 3: NODE ROUTING LOGIC ---
-    const correctNodes = ['C', 'TL', 'TR', 'BR', 'BL'];
-    let currentNodeIndex = 0;
+    // LEVEL 4: The Snap (Timing Minigame)
+    let charge = 0;
+    let chargeInterval;
+    const btn = document.getElementById('snap-btn');
+    const fill = document.getElementById('charge-fill');
+    const text = document.getElementById('charge-text');
 
-    function handleNode(nodeId, element) {
-        if (nodeId === correctNodes[currentNodeIndex]) {
-            element.classList.add('activated');
-            currentNodeIndex++;
+    function startCharge(e) {
+        e.preventDefault(); // Prevents mobile text selection
+        charge = 0;
+        chargeInterval = setInterval(() => {
+            charge += 2; // Speed of charge
+            fill.style.width = charge + "%";
+            text.innerText = charge;
             
-            if (currentNodeIndex === correctNodes.length) {
-                // Sequence complete! Trigger the "Snap"
-                setTimeout(() => {
-                    document.body.style.background = "#fff"; // Flash bang effect
-                    setTimeout(() => {
-                        document.body.style.background = "#050505";
-                        document.getElementById('level-3').classList.add('hidden');
-                        document.getElementById('success-screen').classList.remove('hidden');
-                    }, 200);
-                }, 500);
+            if(charge > 100) {
+                // OVERLOAD
+                stopCharge();
+                fill.style.background = "#fff";
+                text.innerText = "OVERLOAD!";
+                setTimeout(() => { fill.style.width = "0%"; charge = 0; text.innerText = "0"; fill.style.background = "#ff3366"; }, 800);
             }
-        } else {
-            // Wrong node clicked! Reset the level.
-            alert("ROUTING ERROR. Sequence reset.");
-            currentNodeIndex = 0;
-            document.querySelectorAll('.node').forEach(n => n.classList.remove('activated'));
+        }, 50);
+    }
+
+    function stopCharge(e) {
+        if(e) e.preventDefault();
+        clearInterval(chargeInterval);
+        if(charge === 100) {
+            // SUCCESS
+            document.body.style.background = "#fff"; // Flashbang
+            setTimeout(() => {
+                document.body.style.background = "#020202";
+                document.getElementById('lvl4').classList.add('hidden');
+                document.getElementById('success').classList.remove('hidden');
+            }, 300);
+        } else if (charge < 100 && charge > 0) {
+            text.innerText = "FAILED: INSUFFICIENT POWER";
+            setTimeout(() => { fill.style.width = "0%"; charge = 0; text.innerText = "0"; }, 800);
         }
     }
+
+    // Mouse events for PC
+    btn.addEventListener('mousedown', startCharge);
+    btn.addEventListener('mouseup', stopCharge);
+    btn.addEventListener('mouseleave', () => { if(charge > 0 && charge < 100) stopCharge(); });
+    
+    // Touch events for Mobile Phones
+    btn.addEventListener('touchstart', startCharge);
+    btn.addEventListener('touchend', stopCharge);
+
 </script>
 
 </body>
